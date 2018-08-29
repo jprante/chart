@@ -13,6 +13,8 @@ import org.xbib.graphics.chart.xy.XYSeriesRenderStyle;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AreaChartTest {
 
@@ -38,6 +40,43 @@ public class AreaChartTest {
 
         VectorGraphicsEncoder.write(chart, Files.newOutputStream(Paths.get("build/areachart1.svg")),
                 VectorGraphicsEncoder.VectorGraphicsFormat.SVG);
+    }
+
+    @Test
+    public void testAreaChart2() throws IOException {
+        XYChart chart = new XYChartBuilder()
+                        .width(800)
+                        .height(600)
+                        .title(getClass().getSimpleName())
+                        .xAxisTitle("X")
+                        .yAxisTitle("Y")
+                        .build();
+
+        chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Area);
+        chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
+        List<Integer> xData = new ArrayList<>();
+        List<Integer> yData = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            xData.add(i);
+            yData.add(i * i);
+        }
+        xData.add(5);
+        yData.add(null);
+        for (int i = 6; i < 10; i++) {
+            xData.add(i);
+            yData.add(i * i);
+        }
+        xData.add(10);
+        yData.add(null);
+        xData.add(11);
+        yData.add(100);
+        xData.add(12);
+        yData.add(90);
+        chart.addSeries("a", xData, yData);
+
+        VectorGraphicsEncoder.write(chart, Files.newOutputStream(Paths.get("build/areachart2.svg")),
+                VectorGraphicsEncoder.VectorGraphicsFormat.SVG);
+
     }
 
     @Test
@@ -77,6 +116,7 @@ public class AreaChartTest {
         chart.addSeries("75th Percentile", xAges, yPercentile75th);
         chart.addSeries("50th Percentile", xAges, yPercentile50th);
         chart.addSeries("25th Percentile", xAges, yPercentile25th);
+
         VectorGraphicsEncoder.write(chart, Files.newOutputStream(Paths.get("build/areachart3.svg")),
                 VectorGraphicsEncoder.VectorGraphicsFormat.SVG);
     }

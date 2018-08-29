@@ -1,9 +1,9 @@
 package org.xbib.graphics.chart.internal.chart;
 
+import org.xbib.graphics.chart.Theme;
 import org.xbib.graphics.chart.internal.series.Series;
 import org.xbib.graphics.chart.internal.style.Styler;
 
-import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Shape;
@@ -48,7 +48,7 @@ public class ChartTitle<ST extends Styler, S extends Series> implements ChartCom
         if (chart.getStyler().isChartTitleBoxVisible()) {
             double chartTitleBoxWidth = chart.getPlot().getBounds().getWidth();
             double chartTitleBoxHeight = textBounds.getHeight() + 2 * chart.getStyler().getChartTitlePadding();
-            g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
+            g.setStroke(Theme.Strokes.TITLE);
             Shape rect = new Rectangle2D.Double(xOffset, yOffset, chartTitleBoxWidth, chartTitleBoxHeight);
             g.setColor(chart.getStyler().getChartTitleBoxBackgroundColor());
             g.fill(rect);

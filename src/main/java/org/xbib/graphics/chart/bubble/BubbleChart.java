@@ -35,15 +35,6 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
         setYAxisTitle(chartBuilder.yAxisTitle);
     }
 
-    /**
-     * Add a series for a Bubble type chart using using double arrays
-     *
-     * @param seriesName
-     * @param xData the X-Axis data
-     * @param xData the Y-Axis data
-     * @param bubbleData the bubble data
-     * @return A Series object that you can set properties on
-     */
     public BubbleSeries addSeries(String seriesName,
             List<?> xData,
             List<? extends Number> yData,
@@ -94,25 +85,21 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
     public void paint(Graphics2D g, int width, int height) {
         setWidth(width);
         setHeight(height);
-        // set the series types if they are not set. Legend and Plot need it.
         for (BubbleSeries bubbleSeries : getSeriesMap().values()) {
             BubbleSeriesRenderStyle seriesType =
-                    bubbleSeries.getBubbleSeriesRenderStyle(); // would be directly set
-            if (seriesType == null) { // wasn't overridden, use default from Style Manager
+                    bubbleSeries.getBubbleSeriesRenderStyle();
+            if (seriesType == null) {
                 bubbleSeries.setBubbleSeriesRenderStyle(getStyler().getDefaultSeriesRenderStyle());
             }
         }
         setSeriesStyles();
-
         paintBackground(g);
-
         axisPair.paint(g);
         plot.paint(g);
         chartTitle.paint(g);
         legend.paint(g);
     }
 
-    /** set the series color based on theme */
     private void setSeriesStyles() {
         SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler =
                 new SeriesColorMarkerLineStyleCycler(
@@ -122,13 +109,13 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
         for (BubbleSeries series : getSeriesMap().values()) {
             SeriesColorMarkerLineStyle seriesColorMarkerLineStyle =
                     seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();
-            if (series.getLineStyle() == null) { // wasn't set manually
+            if (series.getLineStyle() == null) {
                 series.setLineStyle(seriesColorMarkerLineStyle.getStroke());
             }
-            if (series.getLineColor() == null) { // wasn't set manually
+            if (series.getLineColor() == null) {
                 series.setLineColor(seriesColorMarkerLineStyle.getColor());
             }
-            if (series.getFillColor() == null) { // wasn't set manually
+            if (series.getFillColor() == null) {
                 series.setFillColor(seriesColorMarkerLineStyle.getColor());
             }
         }

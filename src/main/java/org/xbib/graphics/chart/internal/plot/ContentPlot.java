@@ -5,18 +5,14 @@ import org.xbib.graphics.chart.internal.chart.ChartComponent;
 import org.xbib.graphics.chart.internal.series.Series;
 import org.xbib.graphics.chart.internal.style.Styler;
 
-import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.Shape;
-import java.awt.Stroke;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 
 public abstract class ContentPlot<ST extends Styler, S extends Series> implements ChartComponent {
 
     protected final Chart<ST, S> chart;
-
-    protected final Stroke errorBarStroke = new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
 
     protected ContentPlot(Chart<ST, S> chart) {
         this.chart = chart;

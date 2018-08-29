@@ -45,11 +45,11 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
         setYAxisTitle(chartBuilder.getyAxisTitle());
     }
 
-    public XYSeries addSeries(String seriesName, List<?> xData, List<? extends Double> yData) {
+    public XYSeries addSeries(String seriesName, List<?> xData, List<? extends Number> yData) {
         return addSeries(seriesName, xData, yData, null, getDataType(xData));
     }
 
-    public XYSeries addSeries(String seriesName, List<?> xData, List<? extends Double> yData, List<? extends Double> errorBars) {
+    public XYSeries addSeries(String seriesName, List<?> xData, List<? extends Number> yData, List<? extends Number> errorBars) {
         return addSeries(seriesName, xData, yData, errorBars, getDataType(xData));
     }
 
@@ -70,17 +70,14 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
     }
 
     public XYSeries addSeries(String seriesName, int[] xData, int[] yData, int[] errorBars) {
-        return addSeries(seriesName,
-                listFromIntArray(xData),
-                listFromIntArray(yData),
-                listFromIntArray(errorBars),
-                DataType.Number);
+        return addSeries(seriesName, listFromIntArray(xData), listFromIntArray(yData),
+                listFromIntArray(errorBars), DataType.Number);
     }
 
     public XYSeries addSeries(String seriesName,
                               List<?> xData,
-                              List<? extends Double> yData,
-                              List<? extends Double> errorBars,
+                              List<? extends Number> yData,
+                              List<? extends Number> errorBars,
                               DataType dataType) {
         sanityCheck(seriesName, xData, yData, errorBars);
         XYSeries series;
@@ -313,7 +310,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
                         } else {
                             g.setColor(xystyler.getErrorBarsColor());
                         }
-                        g.setStroke(errorBarStroke);
+                        g.setStroke(Theme.Strokes.ERROR_BARS);
                         double topValue;
                         if (xystyler.isYAxisLogarithmic()) {
                             topValue = yOrig + eb;

@@ -186,7 +186,10 @@ public interface Theme {
     }
 
     interface Strokes {
-
+        BasicStroke TITLE = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
+        BasicStroke LEGEND = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] {3.0f, 0.0f}, 0.0f);
+        BasicStroke ERROR_BARS = new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
+        BasicStroke PIE = new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER);
     }
 
     interface Series {

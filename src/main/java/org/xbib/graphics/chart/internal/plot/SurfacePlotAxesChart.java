@@ -10,14 +10,11 @@ import java.awt.Shape;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
-import java.util.logging.Logger;
 
 /**
  * Draws the plot background, the plot border and the horizontal and vertical grid lines.
  */
 public class SurfacePlotAxesChart<ST extends AxesChartStyler, S extends Series> extends SurfacePlot<ST, S> {
-
-    private static final Logger logger = Logger.getLogger(SurfacePlotAxesChart.class.getName());
 
     private final ST axesChartStyler;
 

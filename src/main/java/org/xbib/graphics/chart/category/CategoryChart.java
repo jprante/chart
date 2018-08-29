@@ -495,7 +495,7 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
                         } else {
                             g.setColor(stylerCategory.getErrorBarsColor());
                         }
-                        g.setStroke(errorBarStroke);
+                        g.setStroke(Theme.Strokes.ERROR_BARS);
 
                         // Top value
                         double errorBarLength = ((eb) / (yMax - yMin) * yTickSpace);
@@ -671,7 +671,7 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
                         } else {
                             g.setColor(categoryStyler.getErrorBarsColor());
                         }
-                        g.setStroke(errorBarStroke);
+                        g.setStroke(Theme.Strokes.ERROR_BARS);
                         double topValue;
                         if (categoryStyler.isYAxisLogarithmic()) {
                             topValue = yOrig + eb;

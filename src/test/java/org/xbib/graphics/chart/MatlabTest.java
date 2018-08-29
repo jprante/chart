@@ -5,8 +5,6 @@ import org.xbib.graphics.chart.io.VectorGraphicsEncoder;
 import org.xbib.graphics.chart.xy.XYChart;
 import org.xbib.graphics.chart.xy.XYChartBuilder;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;

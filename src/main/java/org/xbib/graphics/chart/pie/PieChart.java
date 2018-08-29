@@ -9,7 +9,6 @@ import org.xbib.graphics.chart.internal.style.SeriesColorMarkerLineStyle;
 import org.xbib.graphics.chart.internal.style.SeriesColorMarkerLineStyleCycler;
 import org.xbib.graphics.chart.Theme;
 
-import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Shape;
@@ -266,13 +265,11 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
                             annotationWillFit = true;
                         }
                     }
-                    // draw annotation
                     if (pieStyler.isDrawAllAnnotations() || annotationWillFit) {
                         g.setColor(pieStyler.getChartFontColor());
                         g.setFont(pieStyler.getAnnotationsFont());
                         AffineTransform orig = g.getTransform();
                         AffineTransform at = new AffineTransform();
-                        // inside
                         if (pieStyler.getAnnotationDistance() <= 1.0) {
                             at.translate(xOffset, yOffset);
                         }
@@ -280,16 +277,11 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
                             xCenter = pieBounds.getX() + pieBounds.getWidth() / 2;
                             yCenter = pieBounds.getY() + pieBounds.getHeight() / 2;
                             double endPoint = (3.0 - pieStyler.getAnnotationDistance());
-                            double xOffsetStart =
-                                    xCenter + Math.cos(Math.toRadians(angle)) * (pieBounds.getWidth() / 2.01);
-                            double xOffsetEnd =
-                                    xCenter + Math.cos(Math.toRadians(angle)) * (pieBounds.getWidth() / endPoint);
-                            double yOffsetStart =
-                                    yCenter - Math.sin(Math.toRadians(angle)) * (pieBounds.getHeight() / 2.01);
-                            double yOffsetEnd =
-                                    yCenter - Math.sin(Math.toRadians(angle)) * (pieBounds.getHeight() / endPoint);
-
-                            g.setStroke(new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER));
+                            double xOffsetStart = xCenter + Math.cos(Math.toRadians(angle)) * (pieBounds.getWidth() / 2.01);
+                            double xOffsetEnd = xCenter + Math.cos(Math.toRadians(angle)) * (pieBounds.getWidth() / endPoint);
+                            double yOffsetStart = yCenter - Math.sin(Math.toRadians(angle)) * (pieBounds.getHeight() / 2.01);
+                            double yOffsetEnd = yCenter - Math.sin(Math.toRadians(angle)) * (pieBounds.getHeight() / endPoint);
+                            g.setStroke(Theme.Strokes.PIE);
                             Shape line = new Line2D.Double(xOffsetStart, yOffsetStart, xOffsetEnd, yOffsetEnd);
                             g.draw(line);
                             at.translate(xOffset - Math.sin(Math.toRadians(angle - 90)) * annotationWidth / 2 + 3, yOffset);
@@ -308,7 +300,6 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
                         * (pieBounds.getWidth() / 2 * pieStyler.getAnnotationDistance());
                 double yOffset = yCenter - Math.sin(Math.toRadians(angle))
                         * (pieBounds.getHeight() / 2 * pieStyler.getAnnotationDistance());
-
                 startAngle += arcAngle;
             }
         }
@@ -316,7 +307,7 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
         Shape getDonutSliceShape(Rectangle2D pieBounds, double thickness, double start, double extent) {
             thickness = thickness / 2;
             GeneralPath generalPath = new GeneralPath();
-            GeneralPath dummy = new GeneralPath(); // used to find arc endpoints
+            GeneralPath dummy = new GeneralPath();
             double x = pieBounds.getX();
             double y = pieBounds.getY();
             double width = pieBounds.getWidth();

@@ -15,8 +15,8 @@ public class XYSeries extends AxesChartSeriesNumericalNoErrorBars {
 
     public XYSeries(String name,
                     List<?> xData,
-                    List<? extends Double> yData,
-                    List<? extends Double> errorBars,
+                    List<? extends Number> yData,
+                    List<? extends Number> errorBars,
                     DataType dataType) {
         super(name, xData, yData, errorBars, dataType);
     }

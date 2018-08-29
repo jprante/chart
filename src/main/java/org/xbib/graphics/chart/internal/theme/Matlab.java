@@ -9,11 +9,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Stroke;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class Matlab extends AbstractTheme implements Theme {
-
-    private static final Logger logger = Logger.getLogger(Matlab.class.getName());
 
     @Override
     public Color getChartBackgroundColor() {
@@ -162,7 +159,6 @@ public class Matlab extends AbstractTheme implements Theme {
 
     @Override
     public Stroke getAxisTickMarksStroke() {
-        logger.info("get axis tick stroke = " + Matlab.AXIS_TICKMARK);
         return Matlab.AXIS_TICKMARK;
     }
 
@@ -233,7 +229,6 @@ public class Matlab extends AbstractTheme implements Theme {
 
     @Override
     public Stroke getPlotGridLinesStroke() {
-        logger.info("get plot stroke = " + Matlab.GRID_LINES);
         return Matlab.GRID_LINES;
     }
 
