@@ -4,11 +4,8 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
-import java.io.IOException;
 
-public class ClippingTest extends TestCase {
-    public ClippingTest() throws IOException {
-    }
+public class ClippingTest extends AbstractTest {
 
     @Override
     public void draw(Graphics2D g) {

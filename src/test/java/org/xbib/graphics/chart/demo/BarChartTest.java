@@ -1,13 +1,13 @@
 package org.xbib.graphics.chart.demo;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.xbib.graphics.chart.Histogram;
-import org.xbib.graphics.chart.Theme;
+import org.xbib.graphics.chart.theme.GGPlot2Theme;
+import org.xbib.graphics.chart.io.VectorGraphicsFormat;
 import org.xbib.graphics.chart.category.CategoryChart;
 import org.xbib.graphics.chart.category.CategoryChartBuilder;
 import org.xbib.graphics.chart.category.CategorySeries;
 import org.xbib.graphics.chart.category.CategorySeriesRenderStyle;
-import org.xbib.graphics.chart.io.VectorGraphicsEncoder;
 import org.xbib.graphics.chart.legend.LegendPosition;
 
 import java.awt.Color;
@@ -37,8 +37,8 @@ public class BarChartTest {
 
         chart.addSeries("test 1", Arrays.asList(0, 1, 2, 3, 4), Arrays.asList(4, 5, 9, 6, 5));
 
-        VectorGraphicsEncoder.write(chart, Files.newOutputStream(Paths.get("build/barchart1.svg")),
-                VectorGraphicsEncoder.VectorGraphicsFormat.SVG);
+        chart.write(Files.newOutputStream(Paths.get("build/barchart1.svg")),
+                VectorGraphicsFormat.SVG);
     }
 
     @Test
@@ -54,8 +54,8 @@ public class BarChartTest {
         chart.addSeries("histogram 1", histogram1.getxAxisData(), histogram1.getyAxisData());
         chart.addSeries("histogram 2", histogram2.getxAxisData(), histogram2.getyAxisData());
 
-        VectorGraphicsEncoder.write(chart, Files.newOutputStream(Paths.get("build/barchart6.svg")),
-                VectorGraphicsEncoder.VectorGraphicsFormat.SVG);
+        chart.write(Files.newOutputStream(Paths.get("build/barchart6.svg")),
+                VectorGraphicsFormat.SVG);
     }
 
     private List<Double> getGaussianData(int count) {
@@ -76,7 +76,7 @@ public class BarChartTest {
                         .title("Temperature vs. Color")
                         .xAxisTitle("Color")
                         .yAxisTitle("Temperature")
-                        .theme(Theme.GGPLOT2)
+                        .theme(new GGPlot2Theme())
                         .build();
 
         chart.getStyler().setPlotGridVerticalLinesVisible(false);
@@ -92,8 +92,8 @@ public class BarChartTest {
         chart.addSeries("slugs", Arrays.asList("Blue", "Red", "Green", "Yellow", "Orange"),
                 Arrays.asList(-2, 29, 49, -16, -43));
 
-        VectorGraphicsEncoder.write(chart, Files.newOutputStream(Paths.get("build/ggplot1.svg")),
-                VectorGraphicsEncoder.VectorGraphicsFormat.SVG);
+        chart.write(Files.newOutputStream(Paths.get("build/ggplot1.svg")),
+                VectorGraphicsFormat.SVG);
     }
 
 
@@ -106,7 +106,7 @@ public class BarChartTest {
                         .title("Temperature vs. Color")
                         .xAxisTitle("Color")
                         .yAxisTitle("Temperature")
-                        .theme(Theme.GGPLOT2)
+                        .theme(new GGPlot2Theme())
                         .build();
 
         chart.getStyler().setPlotGridVerticalLinesVisible(false);
@@ -127,8 +127,8 @@ public class BarChartTest {
             series.setCategorySeriesRenderStyle(CategorySeriesRenderStyle.SteppedBar);
             series.setFillColor(new Color(0, 0, 0, 0));
         }
-        VectorGraphicsEncoder.write(chart, Files.newOutputStream(Paths.get("build/ggplot2.svg")),
-                VectorGraphicsEncoder.VectorGraphicsFormat.SVG);
+        chart.write(Files.newOutputStream(Paths.get("build/ggplot2.svg")),
+                VectorGraphicsFormat.SVG);
     }
 
 }

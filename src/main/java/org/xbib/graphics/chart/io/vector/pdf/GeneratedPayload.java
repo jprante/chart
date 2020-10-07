@@ -3,6 +3,7 @@ package org.xbib.graphics.chart.io.vector.pdf;
 import java.io.IOException;
 
 public abstract class GeneratedPayload extends Payload {
+
     public GeneratedPayload(boolean stream) {
         super(stream);
     }

@@ -1,7 +1,7 @@
 package org.xbib.graphics.chart.pie;
 
-import org.xbib.graphics.chart.internal.chart.Chart;
-import org.xbib.graphics.chart.internal.legend.AbstractLegend;
+import org.xbib.graphics.chart.Chart;
+import org.xbib.graphics.chart.legend.AbstractLegend;
 import org.xbib.graphics.chart.legend.LegendLayout;
 import org.xbib.graphics.chart.legend.LegendRenderType;
 

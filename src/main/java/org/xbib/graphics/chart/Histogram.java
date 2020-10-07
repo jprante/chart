@@ -7,17 +7,22 @@ import java.util.List;
 public class Histogram {
 
     private final Collection<? extends Number> originalData;
+
     private final int numBins;
+
     private final double min;
+
     private final double max;
+
     private List<Double> xAxisData;
+
     private List<Double> yAxisData;
 
     public Histogram(Collection<? extends Number> data, int numBins) {
         this.numBins = numBins;
         this.originalData = data;
-        Double tempMax = -Double.MAX_VALUE;
-        Double tempMin = Double.MAX_VALUE;
+        double tempMax = -Double.MAX_VALUE;
+        double tempMin = Double.MAX_VALUE;
         for (Number number : data) {
             double value = number.doubleValue();
             if (value > tempMax) {

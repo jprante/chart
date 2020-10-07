@@ -1,7 +1,12 @@
 package org.xbib.graphics.chart.io.vector.util;
 
-import org.junit.Test;
-
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Polygon;
@@ -20,13 +25,7 @@ import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.FilteredImageSource;
 import java.awt.image.RGBImageFilter;
-
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertTrue;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * On Linux, the package msttcorefonts need to be installed
@@ -98,24 +97,21 @@ public class GraphicsUtilsTest {
     @Test
     public void testHasAlpha() {
         Image image;
-
         image = new BufferedImage(320, 240, BufferedImage.TYPE_INT_ARGB);
         assertTrue(GraphicsUtils.hasAlpha(image));
-
         image = new BufferedImage(320, 240, BufferedImage.TYPE_INT_RGB);
         assertFalse(GraphicsUtils.hasAlpha(image));
     }
 
     @Test
     public void testPhysicalFont() {
-        Font font;
-
-        font = new Font("Monospaced", Font.PLAIN, 12);
+        Font font = new Font("Monospaced", Font.PLAIN, 12);
         assertNotSame(font, GraphicsUtils.getPhysicalFont(font));
     }
 
     @Test
-    public void testCloneShape() throws InstantiationException, IllegalAccessException {
+    public void testCloneShape()
+            throws InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         Class<?>[] shapeClasses = {
                 Line2D.Float.class,
                 Line2D.Double.class,
@@ -136,9 +132,8 @@ public class GraphicsUtilsTest {
                 Path2D.Float.class,
                 Path2D.Double.class
         };
-
         for (Class<?> shapeClass : shapeClasses) {
-            Shape shape = (Shape) shapeClass.newInstance();
+            Shape shape = (Shape) shapeClass.getDeclaredConstructor().newInstance();
             Shape clone = GraphicsUtils.clone(shape);
             assertNotNull(clone);
             assertShapeEquals(shape, clone);

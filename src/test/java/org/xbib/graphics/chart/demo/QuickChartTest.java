@@ -1,8 +1,8 @@
 package org.xbib.graphics.chart.demo;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.xbib.graphics.chart.QuickChart;
-import org.xbib.graphics.chart.io.VectorGraphicsEncoder;
+import org.xbib.graphics.chart.io.VectorGraphicsFormat;
 import org.xbib.graphics.chart.xy.XYChart;
 
 import java.io.IOException;
@@ -17,7 +17,7 @@ public class QuickChartTest {
         double[] yData = new double[] { 2.0, 1.0, 0.0 };
         XYChart chart = QuickChart.getChart("Sample Chart",
                 "X", "Y", "y(x)", xData, yData);
-        VectorGraphicsEncoder.write(chart, Files.newOutputStream(Paths.get("build/quickchart1.svg")),
-                VectorGraphicsEncoder.VectorGraphicsFormat.SVG);
+        chart.write(Files.newOutputStream(Paths.get("build/quickchart1.pdf")),
+                VectorGraphicsFormat.PDF);
     }
 }

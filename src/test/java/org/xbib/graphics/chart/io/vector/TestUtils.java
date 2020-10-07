@@ -1,5 +1,7 @@
 package org.xbib.graphics.chart.io.vector;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Collections;
 import java.util.IdentityHashMap;
 import java.util.Iterator;
@@ -10,13 +12,8 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-/**
- * Utility class for unit tests.
- */
 public abstract class TestUtils {
+
     protected TestUtils() {
         throw new UnsupportedOperationException();
     }
@@ -31,21 +28,19 @@ public abstract class TestUtils {
             if (lineExpected == null) {
                 continue;
             }
-            assertTrue(String.format("Line is of type %s, expected String.",
-                    lineActual.getClass()), lineActual instanceof String);
+            assertTrue(lineActual instanceof String,
+                    String.format("Line is of type %s, expected String.", lineActual.getClass()));
 
             if (lineExpected instanceof String) {
                 assertEquals(lineExpected, lineActual);
             } else if (lineExpected instanceof Pattern) {
                 Pattern expectedPattern = (Pattern) lineExpected;
                 Matcher matcher = expectedPattern.matcher((String) lineActual);
-                assertTrue(String.format(
-                        "Line didn't match pattern.\nExpected: \"%s\"\nActual: \"%s\"",
-                        matcher.pattern(), lineActual),
-                        matcher.matches());
+                assertTrue(matcher.matches(),
+                        String.format("Line didn't match pattern.\nExpected: \"%s\"\nActual: \"%s\"", matcher.pattern(), lineActual));
             }
         }
-        assertEquals("Wrong number of lines in template.", expected.size(), actual.size());
+        assertEquals(expected.size(), actual.size(), "Wrong number of lines in template.");
     }
 
     private static List<XMLFragment> parseXML(String xmlString) {
@@ -74,6 +69,7 @@ public abstract class TestUtils {
         assertEquals(expectedFrags.size(), actualFrags.size());
     }
 
+    @SuppressWarnings("serial")
     public static class Template extends LinkedList<Object> {
         public Template(Object[] lines) {
             Collections.addAll(this, lines);
@@ -87,17 +83,29 @@ public abstract class TestUtils {
     }
 
     public static class XMLFragment {
+
         private static final Pattern CDATA = Pattern.compile("\\s*<!\\[CDATA\\[(.*?)\\]\\]>");
+
         private static final Pattern COMMENT = Pattern.compile("\\s*<!--(.*?)-->");
+
         private static final Pattern TAG_BEGIN = Pattern.compile("\\s*<(/|\\?|!)?\\s*([^\\s>/\\?]+)");
+
         private static final Pattern TAG_END = Pattern.compile("\\s*(/|\\?)?>");
+
         private static final Pattern TAG_ATTRIBUTE = Pattern.compile("\\s*([^\\s>=]+)=(\"[^\"]*\"|'[^']*')");
+
         private static final Pattern DOCTYPE_PART = Pattern.compile("\\s*(\"[^\"]*\"|'[^']*'|[^\\s>]+)");
+
         public final String name;
+
         public final FragmentType type;
+
         public final Map<String, String> attributes;
+
         public final int matchStart;
+
         public final int matchEnd;
+
         public XMLFragment(String name, FragmentType type, Map<String, String> attributes,
                            int matchStart, int matchEnd) {
             this.name = name;
@@ -203,11 +211,9 @@ public abstract class TestUtils {
                 return false;
             }
             XMLFragment frag = (XMLFragment) o;
-
             if (!type.equals(frag.type) || !name.equals(frag.name)) {
                 return false;
             }
-
             Iterator<Map.Entry<String, String>> itThis = attributes.entrySet().iterator();
             Iterator<Map.Entry<String, String>> itFrag = frag.attributes.entrySet().iterator();
             while (itThis.hasNext() && itFrag.hasNext()) {
@@ -218,8 +224,12 @@ public abstract class TestUtils {
                     return false;
                 }
             }
-
             return true;
+        }
+
+        @Override
+        public int hashCode() {
+            return type.hashCode() ^ attributes.hashCode();
         }
 
         @Override

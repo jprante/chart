@@ -1,15 +1,15 @@
 package org.xbib.graphics.chart.category;
 
 import org.xbib.graphics.chart.axis.DataType;
-import org.xbib.graphics.chart.internal.axis.Axis;
-import org.xbib.graphics.chart.internal.axis.AxisPair;
-import org.xbib.graphics.chart.internal.chart.Chart;
-import org.xbib.graphics.chart.internal.legend.MarkerLegend;
-import org.xbib.graphics.chart.internal.plot.AxesChartPlot;
-import org.xbib.graphics.chart.internal.plot.ContentPlot;
-import org.xbib.graphics.chart.internal.style.SeriesColorMarkerLineStyle;
-import org.xbib.graphics.chart.internal.style.SeriesColorMarkerLineStyleCycler;
-import org.xbib.graphics.chart.Theme;
+import org.xbib.graphics.chart.axis.Axis;
+import org.xbib.graphics.chart.axis.AxisPair;
+import org.xbib.graphics.chart.Chart;
+import org.xbib.graphics.chart.legend.MarkerLegend;
+import org.xbib.graphics.chart.plot.AxesChartPlot;
+import org.xbib.graphics.chart.plot.ContentPlot;
+import org.xbib.graphics.chart.style.SeriesColorMarkerLineStyle;
+import org.xbib.graphics.chart.style.SeriesColorMarkerLineStyleCycler;
+import org.xbib.graphics.chart.theme.Theme;
 
 import java.awt.Graphics2D;
 import java.awt.Shape;
@@ -125,14 +125,14 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
                                     List<? extends Number> yData,
                                     List<? extends Number> errorBars) {
         sanityCheck(seriesName, xData, yData, errorBars);
-        CategorySeries series = null;
+        CategorySeries series;
         if (xData != null) {
             if (xData.size() != yData.size()) {
                 throw new IllegalArgumentException("X and Y-Axis sizes are not the same");
             }
             series = new CategorySeries(seriesName, xData, yData, errorBars, getDataType(xData));
         } else {
-            series = new CategorySeries(seriesName, getGeneratedData(yData.size()), yData, errorBars, getDataType(xData));
+            series = new CategorySeries(seriesName, getGeneratedData(yData.size()), yData, errorBars, DataType.String);
         }
         seriesMap.put(seriesName, series);
         return series;
@@ -140,7 +140,7 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
 
     private void sanityCheck(String seriesName, List<?> xData, List<? extends Number> yData,
                              List<? extends Number> errorBars) {
-        if (seriesMap.keySet().contains(seriesName)) {
+        if (seriesMap.containsKey(seriesName)) {
             throw new IllegalArgumentException("Series name >" + seriesName + "< has already been used");
         }
         if (yData == null) {
@@ -216,7 +216,7 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
         return axisType;
     }
 
-    private class CategoryPlot<ST extends CategoryStyler, S extends CategorySeries> extends AxesChartPlot<ST, S> {
+    private static class CategoryPlot<ST extends CategoryStyler, S extends CategorySeries> extends AxesChartPlot<ST, S> {
 
         private final ST categoryStyler;
 
@@ -236,7 +236,7 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
         }
     }
 
-    class ContentPlotCategoryBar<ST extends CategoryStyler, S extends CategorySeries> extends ContentPlot<ST, S> {
+    private static class ContentPlotCategoryBar<ST extends CategoryStyler, S extends CategorySeries> extends ContentPlot<ST, S> {
 
         private final ST stylerCategory;
 
@@ -560,7 +560,7 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
         }
     }
 
-    class ContentPlotCategoryLineAreaScatter<ST extends CategoryStyler, S extends CategorySeries> extends ContentPlot<ST, S> {
+    private static class ContentPlotCategoryLineAreaScatter<ST extends CategoryStyler, S extends CategorySeries> extends ContentPlot<ST, S> {
 
         private final ST categoryStyler;
 
@@ -582,7 +582,7 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
                 if (!series.isEnabled()) {
                     continue;
                 }
-                Axis yAxis = chart.getYAxis(series.getYAxisGroup());
+                Axis<?, ?> yAxis = chart.getYAxis(series.getYAxisGroup());
                 double yMin = yAxis.getMin();
                 double yMax = yAxis.getMax();
                 if (categoryStyler.isYAxisLogarithmic()) {
@@ -604,7 +604,7 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
                     Number next = yItr.next();
                     if (next == null) {
                         // for area charts
-                        closePath(g, path, previousX, getBounds(), yTopMargin);
+                        closePath(g, path, previousX, yTopMargin);
                         path = null;
                         previousX = -Double.MAX_VALUE;
                         previousY = -Double.MAX_VALUE;
@@ -681,7 +681,7 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
                         }
                         double topEBTransform = getBounds().getHeight() - (yTopMargin + (topValue - yMin) / (yMax - yMin) * yTickSpace);
                         double topEBOffset = getBounds().getY() + topEBTransform;
-                        double bottomValue = 0.0;
+                        double bottomValue;
                         if (categoryStyler.isYAxisLogarithmic()) {
                             bottomValue = yOrig - eb;
                             bottomValue = Math.log10(bottomValue);
@@ -699,7 +699,7 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
                     }
                 }
                 g.setColor(series.getFillColor());
-                closePath(g, path, previousX, getBounds(), yTopMargin);
+                closePath(g, path, previousX, yTopMargin);
             }
         }
     }

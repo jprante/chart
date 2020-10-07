@@ -1,9 +1,9 @@
 package org.xbib.graphics.chart.demo;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.xbib.graphics.chart.io.VectorGraphicsFormat;
 import org.xbib.graphics.chart.bubble.BubbleChart;
 import org.xbib.graphics.chart.bubble.BubbleChartBuilder;
-import org.xbib.graphics.chart.io.VectorGraphicsEncoder;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -28,7 +28,7 @@ public class BubbleChartTest {
         chart.addSeries("A", xData, yData, bubbleData);
         chart.addSeries("B", xData2, yData2, bubbleData2);
 
-        VectorGraphicsEncoder.write(chart, Files.newOutputStream(Paths.get("build/bubblechart1.svg")),
-                VectorGraphicsEncoder.VectorGraphicsFormat.SVG);
+        chart.write(Files.newOutputStream(Paths.get("build/bubblechart1.svg")),
+                VectorGraphicsFormat.SVG);
     }
 }

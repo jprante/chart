@@ -14,6 +14,7 @@ import java.awt.Stroke;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Rectangle2D;
+import java.util.Objects;
 
 public class GraphicsState implements Cloneable {
     /**
@@ -121,7 +122,7 @@ public class GraphicsState implements Cloneable {
         boolean isRectlinearTx = (tx.getType() & nonRectlinearTxMask) == 0;
         if (isRectangle && isRectlinearTx) {
             Rectangle2D rect = (Rectangle2D) s;
-            double corners[] = new double[]{
+            double[] corners = new double[]{
                     rect.getMinX(), rect.getMinY(),
                     rect.getMaxX(), rect.getMaxY()
             };
@@ -248,7 +249,6 @@ public class GraphicsState implements Cloneable {
             return false;
         }
         GraphicsState o = (GraphicsState) obj;
-        // Compare all attributes
         return !(!hints.equals(o.hints) || !background.equals(o.background) ||
                 !color.equals(o.color) || !composite.equals(o.composite) ||
                 !font.equals(o.font) || !paint.equals(o.paint) ||
@@ -256,6 +256,12 @@ public class GraphicsState implements Cloneable {
                 !xorMode.equals(o.xorMode) ||
                 ((clip == null || o.clip == null) && clip != o.clip) ||
                 (clip != null && !clip.equals(o.clip)));
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(hints, background, color, composite, font, paint,
+                stroke, transform, xorMode, clip);
     }
 
     public boolean isDefault() {

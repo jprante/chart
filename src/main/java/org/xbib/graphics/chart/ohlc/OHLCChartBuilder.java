@@ -1,6 +1,6 @@
 package org.xbib.graphics.chart.ohlc;
 
-import org.xbib.graphics.chart.internal.chart.ChartBuilder;
+import org.xbib.graphics.chart.ChartBuilder;
 
 public class OHLCChartBuilder extends ChartBuilder<OHLCChartBuilder, OHLCChart> {
 

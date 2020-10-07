@@ -1,7 +1,7 @@
 package org.xbib.graphics.chart.bubble;
 
 import org.xbib.graphics.chart.axis.DataType;
-import org.xbib.graphics.chart.internal.series.NoMarkersSeries;
+import org.xbib.graphics.chart.series.NoMarkersSeries;
 import org.xbib.graphics.chart.legend.LegendRenderType;
 
 import java.util.List;

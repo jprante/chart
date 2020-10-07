@@ -1,6 +1,6 @@
 package org.xbib.graphics.chart.io;
 
-import org.xbib.graphics.chart.Theme;
+import org.xbib.graphics.chart.theme.Theme;
 import org.xbib.graphics.chart.xy.XYChart;
 
 import java.io.BufferedReader;

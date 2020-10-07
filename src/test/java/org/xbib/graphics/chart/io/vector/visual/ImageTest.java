@@ -6,11 +6,8 @@ import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
-public class ImageTest extends TestCase {
-    public ImageTest() throws IOException {
-    }
+public class ImageTest extends AbstractTest {
 
     @Override
     public void draw(Graphics2D g) {

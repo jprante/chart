@@ -1,5 +1,6 @@
 package org.xbib.graphics.chart;
 
+import org.xbib.graphics.chart.theme.Theme;
 import org.xbib.graphics.chart.xy.XYChart;
 import org.xbib.graphics.chart.xy.XYSeries;
 

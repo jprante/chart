@@ -1,9 +1,9 @@
 package org.xbib.graphics.chart.demo;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.xbib.graphics.chart.io.VectorGraphicsFormat;
 import org.xbib.graphics.chart.axis.TextAlignment;
-import org.xbib.graphics.chart.Theme;
-import org.xbib.graphics.chart.io.VectorGraphicsEncoder;
+import org.xbib.graphics.chart.theme.Theme;
 import org.xbib.graphics.chart.legend.LegendPosition;
 import org.xbib.graphics.chart.xy.XYChart;
 import org.xbib.graphics.chart.xy.XYChartBuilder;
@@ -38,8 +38,8 @@ public class AreaChartTest {
         chart.addSeries("b", new double[] {0, 2, 4, 6, 9}, new double[] {-1, 6, 4, 0, 4});
         chart.addSeries("c", new double[] {0, 1, 3, 8, 9}, new double[] {-2, -1, 1, 0, 1});
 
-        VectorGraphicsEncoder.write(chart, Files.newOutputStream(Paths.get("build/areachart1.svg")),
-                VectorGraphicsEncoder.VectorGraphicsFormat.SVG);
+        chart.write(Files.newOutputStream(Paths.get("build/areachart1.svg")),
+                VectorGraphicsFormat.SVG);
     }
 
     @Test
@@ -74,8 +74,8 @@ public class AreaChartTest {
         yData.add(90);
         chart.addSeries("a", xData, yData);
 
-        VectorGraphicsEncoder.write(chart, Files.newOutputStream(Paths.get("build/areachart2.svg")),
-                VectorGraphicsEncoder.VectorGraphicsFormat.SVG);
+        chart.write( Files.newOutputStream(Paths.get("build/areachart2.svg")),
+                VectorGraphicsFormat.SVG);
 
     }
 
@@ -117,8 +117,8 @@ public class AreaChartTest {
         chart.addSeries("50th Percentile", xAges, yPercentile50th);
         chart.addSeries("25th Percentile", xAges, yPercentile25th);
 
-        VectorGraphicsEncoder.write(chart, Files.newOutputStream(Paths.get("build/areachart3.svg")),
-                VectorGraphicsEncoder.VectorGraphicsFormat.SVG);
+        chart.write(Files.newOutputStream(Paths.get("build/areachart3.svg")),
+                VectorGraphicsFormat.SVG);
     }
 
     @Test
@@ -140,7 +140,7 @@ public class AreaChartTest {
         chart.addSeries("b", new double[] {0, 2, 4, 6, 9}, new double[] {-1, 6, 4, 0, 4});
         chart.addSeries("c", new double[] {0, 1, 3, 8, 9}, new double[] {-2, -1, 1, 0, 1});
 
-        VectorGraphicsEncoder.write(chart, Files.newOutputStream(Paths.get("build/areachart4.svg")),
-                VectorGraphicsEncoder.VectorGraphicsFormat.SVG);
+        chart.write(Files.newOutputStream(Paths.get("build/areachart4.svg")),
+                VectorGraphicsFormat.SVG);
     }
 }

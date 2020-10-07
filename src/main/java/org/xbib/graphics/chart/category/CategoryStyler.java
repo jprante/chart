@@ -1,7 +1,7 @@
 package org.xbib.graphics.chart.category;
 
-import org.xbib.graphics.chart.internal.style.AxesChartStyler;
-import org.xbib.graphics.chart.Theme;
+import org.xbib.graphics.chart.style.AxesChartStyler;
+import org.xbib.graphics.chart.theme.Theme;
 
 public class CategoryStyler extends AxesChartStyler {
 
@@ -33,12 +33,10 @@ public class CategoryStyler extends AxesChartStyler {
      * This affects all category series render types, not only bar charts. Full width is 100%, i.e.
      * 1.0
      *
-     * @param availableSpaceFill
+     * @param availableSpaceFill space fill
      */
-    public CategoryStyler setAvailableSpaceFill(double availableSpaceFill) {
-
+    public void setAvailableSpaceFill(double availableSpaceFill) {
         this.availableSpaceFill = availableSpaceFill;
-        return this;
     }
 
     public double getAvailableSpaceFill() {
@@ -50,55 +48,48 @@ public class CategoryStyler extends AxesChartStyler {
      * Sets the default series render style for the chart (bar, stick, line, scatter, area, etc.) You can override the
      * series render style individually on each Series object.
      *
-     * @param categorySeriesRenderStyle
+     * @param categorySeriesRenderStyle render style
      */
     public void setDefaultSeriesRenderStyle(CategorySeriesRenderStyle categorySeriesRenderStyle) {
-
         this.categorySeriesRenderStyle = categorySeriesRenderStyle;
     }
 
     public CategorySeriesRenderStyle getDefaultSeriesRenderStyle() {
-
         return categorySeriesRenderStyle;
     }
 
     public boolean isOverlapped() {
-
         return isOverlapped;
     }
 
     /**
      * set whether or no bars are overlapped. Otherwise they are places side-by-side
      *
-     * @param isOverlapped
+     * @param isOverlapped overlapped
      */
     public void setOverlapped(boolean isOverlapped) {
-
         this.isOverlapped = isOverlapped;
     }
 
     public boolean isStacked() {
-
         return isStacked;
     }
 
     /**
      * Set whether or not series renderings (i.e. bars, stick, etc.) are stacked.
      *
-     * @param isStacked
+     * @param isStacked stacked
      */
     public void setStacked(boolean isStacked) {
-
         this.isStacked = isStacked;
     }
 
     /**
      * Set the theme the styler should use
      *
-     * @param theme
+     * @param theme theme
      */
     protected void setTheme(Theme theme) {
-
         this.theme = theme;
         super.setAllStyles();
     }

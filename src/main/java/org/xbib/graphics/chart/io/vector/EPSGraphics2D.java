@@ -10,6 +10,7 @@ import java.awt.Color;
  * in the <i>Encapsulated PostScript®</i> (EPS) format.
  */
 public class EPSGraphics2D extends ProcessingPipeline {
+
     private final Processor processor;
 
     /**

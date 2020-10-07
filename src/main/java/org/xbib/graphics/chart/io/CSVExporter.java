@@ -5,7 +5,7 @@ import org.xbib.graphics.chart.xy.XYSeries;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
@@ -20,13 +20,13 @@ public class CSVExporter {
 
     public static void writeCSVRows(XYSeries series, Path path) throws IOException {
         try (BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(path),
-                Charset.forName("UTF-8")))) {
-            String csv = join(series.getXData(), ",") + LF;
+                StandardCharsets.UTF_8))) {
+            String csv = join(series.getXData()) + LF;
             bufferedWriter.write(csv);
-            csv = join(series.getYData(), ",") + LF;
+            csv = join(series.getYData()) + LF;
             bufferedWriter.write(csv);
             if (series.getExtraValues() != null) {
-                csv = join(series.getExtraValues(), ",") + LF;
+                csv = join(series.getExtraValues()) + LF;
                 bufferedWriter.write(csv);
             }
         }
@@ -34,7 +34,7 @@ public class CSVExporter {
 
     public static void writeCSVColumns(XYSeries series, Path path) throws IOException {
         try (BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(path),
-                Charset.forName("UTF-8")))) {
+                StandardCharsets.UTF_8))) {
             Collection<?> xData = series.getXData();
             Collection<? extends Number> yData = series.getYData();
             Collection<? extends Number> errorBarData = series.getExtraValues();
@@ -63,11 +63,11 @@ public class CSVExporter {
         }
     }
 
-    private static String join(Collection collection, String separator) {
+    private static String join(Collection<?> collection) {
         if (collection == null) {
             return null;
         }
-        Iterator iterator = collection.iterator();
+        Iterator<?> iterator = collection.iterator();
         if (!iterator.hasNext()) {
             return "";
         }
@@ -80,9 +80,7 @@ public class CSVExporter {
             sb.append(first);
         }
         while (iterator.hasNext()) {
-            if (separator != null) {
-                sb.append(separator);
-            }
+            sb.append(",");
             Object obj = iterator.next();
             if (obj != null) {
                 sb.append(obj);

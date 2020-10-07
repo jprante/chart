@@ -1,7 +1,7 @@
 package org.xbib.graphics.chart.xy;
 
 import org.xbib.graphics.chart.axis.DataType;
-import org.xbib.graphics.chart.internal.series.AxesChartSeriesNumericalNoErrorBars;
+import org.xbib.graphics.chart.series.AxesChartSeriesNumericalNoErrorBars;
 import org.xbib.graphics.chart.legend.LegendRenderType;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class XYSeries extends AxesChartSeriesNumericalNoErrorBars {
 
-    private XYSeriesRenderStyle xySeriesRenderStyle = null;
+    private XYSeriesRenderStyle xySeriesRenderStyle;
 
     public XYSeries(String name,
                     List<?> xData,

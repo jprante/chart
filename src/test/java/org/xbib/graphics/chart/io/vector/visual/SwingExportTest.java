@@ -5,12 +5,8 @@ import javax.swing.JFrame;
 import javax.swing.JSlider;
 import java.awt.BorderLayout;
 import java.awt.Graphics2D;
-import java.io.IOException;
 
-public class SwingExportTest extends TestCase {
-
-    public SwingExportTest() throws IOException {
-    }
+public class SwingExportTest extends AbstractTest {
 
     @Override
     public void draw(Graphics2D g) {

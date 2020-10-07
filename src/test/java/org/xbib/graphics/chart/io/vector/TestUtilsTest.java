@@ -1,12 +1,13 @@
 package org.xbib.graphics.chart.io.vector;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
 import org.xbib.graphics.chart.io.vector.TestUtils.XMLFragment;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class TestUtilsTest {
+
     @Test
     public void testParseXmlStartTag() throws Exception {
         String xmlTagName = "foo:bar.baz_tag";

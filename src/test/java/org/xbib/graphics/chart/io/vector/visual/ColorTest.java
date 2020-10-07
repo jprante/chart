@@ -3,11 +3,8 @@ package org.xbib.graphics.chart.io.vector.visual;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
-import java.io.IOException;
 
-public class ColorTest extends TestCase {
-    public ColorTest() throws IOException {
-    }
+public class ColorTest extends AbstractTest {
 
     @Override
     public void draw(Graphics2D g) {
@@ -15,10 +12,8 @@ public class ColorTest extends TestCase {
         final float hPage = (float) getPageSize().height;
         final float wTile = Math.min(wPage / 15f, hPage / 15f);
         final float hTile = wTile;
-
         float w = wPage - wTile;
         float h = hPage - hTile;
-
         for (float y = (hPage - h) / 2f; y < h; y += hTile) {
             float yRel = y / h;
             for (float x = (wPage - w) / 2f; x < w; x += wTile) {
@@ -30,5 +25,4 @@ public class ColorTest extends TestCase {
             }
         }
     }
-
 }

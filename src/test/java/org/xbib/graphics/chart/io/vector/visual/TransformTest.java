@@ -4,11 +4,8 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
-import java.io.IOException;
 
-public class TransformTest extends TestCase {
-    public TransformTest() throws IOException {
-    }
+public class TransformTest extends AbstractTest {
 
     @Override
     public void draw(Graphics2D g) {

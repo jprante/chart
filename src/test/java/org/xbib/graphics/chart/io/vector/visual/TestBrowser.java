@@ -27,40 +27,36 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings("unchecked")
+@SuppressWarnings("serial")
 public class TestBrowser extends JFrame {
-    private final List<TestCase> testCases;
+
+    private final List<AbstractTest> testCases;
+
     private final ImageComparisonPanel imageComparisonPanel;
-    private final JComboBox imageFormatSelector;
-    private TestCase testCase;
+
+    private AbstractTest testCase;
 
     public TestBrowser() {
         super("Test browser");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(1024, 768);
-
         testCases = new ArrayList<>();
-        try {
-            testCases.add(new ColorTest());
-            testCases.add(new StrokeTest());
-            testCases.add(new ShapesTest());
-            testCases.add(new FontTest());
-            testCases.add(new CharacterTest());
-            testCases.add(new EmptyFileTest());
-            testCases.add(new ImageTest());
-            testCases.add(new ClippingTest());
-            testCases.add(new PaintTest());
-            testCases.add(new SwingExportTest());
-            testCases.add(new TransformTest());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        final JList testList = new JList(testCases.toArray());
+        testCases.add(new ColorTest());
+        testCases.add(new StrokeTest());
+        testCases.add(new ShapesTest());
+        testCases.add(new FontTest());
+        testCases.add(new CharacterTest());
+        testCases.add(new EmptyFileTest());
+        testCases.add(new ImageTest());
+        testCases.add(new ClippingTest());
+        testCases.add(new PaintTest());
+        testCases.add(new SwingExportTest());
+        testCases.add(new TransformTest());
+        final JList<?> testList = new JList<>(testCases.toArray());
         testList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         testList.setCellRenderer(new DefaultListCellRenderer() {
             @Override
-            public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
                 String testName = value.getClass().getSimpleName();
                 return super.getListCellRendererComponent(list, testName, index, isSelected, cellHasFocus);
             }
@@ -71,7 +67,7 @@ public class TestBrowser extends JFrame {
                 if (index < 0) {
                     return;
                 }
-                TestCase test = testCases.get(index);
+                AbstractTest test = testCases.get(index);
                 testCase = test;
                 try {
                     setTestCase(test);
@@ -86,7 +82,7 @@ public class TestBrowser extends JFrame {
         getContentPane().add(configurableImageComparisonPanel, BorderLayout.CENTER);
 
         ImageFormat startingImageFormat = ImageFormat.EPS;
-        imageFormatSelector = new JComboBox(ImageFormat.values());
+        JComboBox<?> imageFormatSelector = new JComboBox<>(ImageFormat.values());
         configurableImageComparisonPanel.add(imageFormatSelector, BorderLayout.NORTH);
         imageFormatSelector.setSelectedItem(startingImageFormat);
         imageFormatSelector.addItemListener(new ItemListener() {
@@ -95,7 +91,7 @@ public class TestBrowser extends JFrame {
                 ImageFormat format = (ImageFormat) itemEvent.getItem();
                 imageComparisonPanel.setImageFormat(format);
 
-                TestCase test = getTestCase();
+                AbstractTest test = getTestCase();
                 if (test != null) {
                     try {
                         setTestCase(test);
@@ -114,11 +110,11 @@ public class TestBrowser extends JFrame {
         new TestBrowser().setVisible(true);
     }
 
-    public TestCase getTestCase() {
+    public AbstractTest getTestCase() {
         return testCase;
     }
 
-    public void setTestCase(TestCase test) throws IOException {
+    public void setTestCase(AbstractTest test) throws IOException {
         BufferedImage reference = test.getReference();
         imageComparisonPanel.setLeftComponent(new ImageDisplayPanel(reference, null));
         //ImageDisplayPanel imageDisplayPanel;
@@ -157,12 +153,15 @@ public class TestBrowser extends JFrame {
     }
 
     private static class ImageComparisonPanel extends Box {
-        private final JSplitPane splitPane;
+
         private final Box leftPanel;
+
         private final Box rightPanel;
+
         private ImageFormat imageFormat;
-        // User set components
+
         private JComponent leftComponent;
+
         private JComponent rightComponent;
 
         public ImageComparisonPanel(ImageFormat imageFormat) {
@@ -170,7 +169,7 @@ public class TestBrowser extends JFrame {
 
             this.imageFormat = imageFormat;
 
-            splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+            JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
             splitPane.setResizeWeight(0.5);
             add(splitPane);
 

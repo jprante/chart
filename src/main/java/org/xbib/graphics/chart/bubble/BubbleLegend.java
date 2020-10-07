@@ -1,9 +1,9 @@
 package org.xbib.graphics.chart.bubble;
 
-import org.xbib.graphics.chart.internal.chart.Chart;
-import org.xbib.graphics.chart.internal.legend.AbstractLegend;
-import org.xbib.graphics.chart.internal.series.AxesChartSeries;
-import org.xbib.graphics.chart.internal.style.AxesChartStyler;
+import org.xbib.graphics.chart.Chart;
+import org.xbib.graphics.chart.legend.AbstractLegend;
+import org.xbib.graphics.chart.series.AxesChartSeries;
+import org.xbib.graphics.chart.style.AxesChartStyler;
 import org.xbib.graphics.chart.legend.LegendLayout;
 import org.xbib.graphics.chart.legend.LegendRenderType;
 

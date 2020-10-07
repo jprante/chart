@@ -4,14 +4,8 @@ import org.xbib.graphics.chart.io.vector.GraphicsState;
 
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.io.IOException;
 
-
-public class FontTest extends TestCase {
-    private static final Font DEFAULT_FONT = GraphicsState.DEFAULT_FONT;
-
-    public FontTest() throws IOException {
-    }
+public class FontTest extends AbstractTest {
 
     @Override
     public void draw(Graphics2D g) {
@@ -25,10 +19,10 @@ public class FontTest extends TestCase {
         double y = yOrigin;
 
         final float[] sizes = {
-                DEFAULT_FONT.getSize2D(), DEFAULT_FONT.getSize2D() / 2f
+                GraphicsState.DEFAULT_FONT.getSize2D(), GraphicsState.DEFAULT_FONT.getSize2D() / 2f
         };
         final String[] names = {
-                DEFAULT_FONT.getName(), Font.SERIF, Font.MONOSPACED, "Monospaced"
+                GraphicsState.DEFAULT_FONT.getName(), Font.SERIF, Font.MONOSPACED, "Monospaced"
         };
         final int[] styles = {
                 Font.PLAIN, Font.ITALIC, Font.BOLD, Font.BOLD | Font.ITALIC

@@ -1,7 +1,7 @@
 package org.xbib.graphics.chart.xy;
 
-import org.xbib.graphics.chart.internal.style.AxesChartStyler;
-import org.xbib.graphics.chart.Theme;
+import org.xbib.graphics.chart.style.AxesChartStyler;
+import org.xbib.graphics.chart.theme.Theme;
 
 public class XYStyler extends AxesChartStyler {
 
@@ -26,7 +26,7 @@ public class XYStyler extends AxesChartStyler {
      * render
      * style individually on each Series object.
      *
-     * @param style
+     * @param style style
      */
     public void setDefaultSeriesRenderStyle(XYSeriesRenderStyle style) {
         this.xySeriesRenderStyle = style;
@@ -39,7 +39,7 @@ public class XYStyler extends AxesChartStyler {
     /**
      * Set the theme the styler should use
      *
-     * @param theme
+     * @param theme theme
      */
     protected void setTheme(Theme theme) {
         this.theme = theme;

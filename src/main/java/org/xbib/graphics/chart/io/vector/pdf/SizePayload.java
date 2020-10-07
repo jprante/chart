@@ -3,7 +3,6 @@ package org.xbib.graphics.chart.io.vector.pdf;
 import org.xbib.graphics.chart.io.vector.util.DataUtils;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 public class SizePayload extends GeneratedPayload {
     private final PDFObject object;
@@ -21,8 +20,6 @@ public class SizePayload extends GeneratedPayload {
             object.payload.close();
             String content = DataUtils.format(object.payload.getBytes().length);
             return content.getBytes(charset);
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

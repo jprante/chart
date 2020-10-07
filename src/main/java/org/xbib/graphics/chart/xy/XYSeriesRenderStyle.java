@@ -23,7 +23,6 @@ public enum XYSeriesRenderStyle implements LegendRenderable {
 
     @Override
     public LegendRenderType getLegendRenderType() {
-
         return legendRenderType;
     }
 }

@@ -1,7 +1,7 @@
 package org.xbib.graphics.chart.bubble;
 
-import org.xbib.graphics.chart.internal.style.AxesChartStyler;
-import org.xbib.graphics.chart.Theme;
+import org.xbib.graphics.chart.style.AxesChartStyler;
+import org.xbib.graphics.chart.theme.Theme;
 
 public class BubbleStyler extends AxesChartStyler {
 
@@ -25,7 +25,7 @@ public class BubbleStyler extends AxesChartStyler {
      * Sets the default series render style for the chart (Round is the only one for now) You can
      * override the series render style individually on each Series object.
      *
-     * @param bubbleChartSeriesRenderStyle
+     * @param bubbleChartSeriesRenderStyle render style
      */
     public BubbleStyler setDefaultSeriesRenderStyle(BubbleSeriesRenderStyle bubbleChartSeriesRenderStyle) {
         this.bubbleChartSeriesRenderStyle = bubbleChartSeriesRenderStyle;
@@ -35,7 +35,7 @@ public class BubbleStyler extends AxesChartStyler {
     /**
      * Set the theme the styler should use
      *
-     * @param theme
+     * @param theme theme
      */
     public void setTheme(Theme theme) {
         this.theme = theme;

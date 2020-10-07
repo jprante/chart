@@ -1,15 +1,15 @@
 package org.xbib.graphics.chart.ohlc;
 
 import org.xbib.graphics.chart.axis.DataType;
-import org.xbib.graphics.chart.internal.axis.Axis;
-import org.xbib.graphics.chart.internal.axis.AxisPair;
-import org.xbib.graphics.chart.internal.chart.Chart;
-import org.xbib.graphics.chart.internal.plot.AxesChartPlot;
-import org.xbib.graphics.chart.internal.plot.ContentPlot;
-import org.xbib.graphics.chart.internal.style.AxesChartStyler;
-import org.xbib.graphics.chart.internal.style.SeriesColorMarkerLineStyle;
-import org.xbib.graphics.chart.internal.style.SeriesColorMarkerLineStyleCycler;
-import org.xbib.graphics.chart.Theme;
+import org.xbib.graphics.chart.axis.Axis;
+import org.xbib.graphics.chart.axis.AxisPair;
+import org.xbib.graphics.chart.Chart;
+import org.xbib.graphics.chart.plot.AxesChartPlot;
+import org.xbib.graphics.chart.plot.ContentPlot;
+import org.xbib.graphics.chart.style.AxesChartStyler;
+import org.xbib.graphics.chart.style.SeriesColorMarkerLineStyle;
+import org.xbib.graphics.chart.style.SeriesColorMarkerLineStyleCycler;
+import org.xbib.graphics.chart.theme.Theme;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -49,13 +49,10 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
             List<? extends Number> closeData) {
 
         DataType dataType = getDataType(xData);
-        switch (dataType) {
-            case Instant:
-                return addSeries(seriesName, xData, openData, highData, lowData, closeData, DataType.Instant);
-
-            default:
-                return addSeries(seriesName, xData, openData, highData, lowData, closeData, DataType.Number);
+        if (dataType == DataType.Instant) {
+            return addSeries(seriesName, xData, openData, highData, lowData, closeData, DataType.Instant);
         }
+        return addSeries(seriesName, xData, openData, highData, lowData, closeData, DataType.Number);
     }
 
     public OHLCSeries addSeries(String seriesName,
@@ -79,14 +76,14 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
                                  List<? extends Number> lowData,
                                  List<? extends Number> closeData,
                                  DataType dataType) {
-        if (seriesMap.keySet().contains(seriesName)) {
+        if (seriesMap.containsKey(seriesName)) {
             throw new IllegalArgumentException("Series name >" + seriesName
                             + "< has already been used. Use unique names for each series!!!");
         }
         sanityCheck(seriesName, openData, highData, lowData, closeData);
         final List<?> xDataToUse;
         if (xData != null) {
-            checkDataLengths(seriesName, "X-Axis", "Close", xData, closeData);
+            checkDataLengths(seriesName, "X-Axis", xData, closeData);
             xDataToUse = xData;
         } else {
             xDataToUse = getGeneratedData(closeData.size());
@@ -122,9 +119,10 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
         }
     }
 
-    private void checkDataLengths(String seriesName, String data1Name, String data2Name,
+    private void checkDataLengths(String seriesName, String data1Name,
                                   List<?> data1,
                                   List<?> data2) {
+        String data2Name = "Close";
         if (data1.size() != data2.size()) {
             throw new IllegalArgumentException(
                     data1Name + " and " + data2Name + " sizes are not the same >" + seriesName);
@@ -135,15 +133,13 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
                              List<? extends Number> highData,
                              List<? extends Number> lowData,
                              List<? extends Number> closeData) {
-
         checkData(seriesName, "Open", openData);
         checkData(seriesName, "High", highData);
         checkData(seriesName, "Low", lowData);
         checkData(seriesName, "Close", closeData);
-
-        checkDataLengths(seriesName, "Open", "Close", openData, closeData);
-        checkDataLengths(seriesName, "High", "Close", highData, closeData);
-        checkDataLengths(seriesName, "Low", "Close", lowData, closeData);
+        checkDataLengths(seriesName, "Open", openData, closeData);
+        checkDataLengths(seriesName, "High", highData, closeData);
+        checkDataLengths(seriesName, "Low", lowData, closeData);
     }
 
     @Override
@@ -193,15 +189,15 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
         }
     }
 
-    private class OHLCPlot<ST extends AxesChartStyler, S extends OHLCSeries> extends AxesChartPlot<ST, S> {
+    private static class OHLCPlot<ST extends AxesChartStyler, S extends OHLCSeries> extends AxesChartPlot<ST, S> {
 
         private OHLCPlot(Chart<ST, S> chart) {
             super(chart);
-            this.contentPlot = new ContentPlotOHLC<ST, S>(chart);
+            this.contentPlot = new ContentPlotOHLC<>(chart);
         }
     }
 
-    class ContentPlotOHLC<ST extends AxesChartStyler, S extends OHLCSeries> extends ContentPlot<ST, S> {
+    private static class ContentPlotOHLC<ST extends AxesChartStyler, S extends OHLCSeries> extends ContentPlot<ST, S> {
 
         private final ST ohlcStyler;
 
@@ -229,7 +225,7 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
                 if (!series.isEnabled()) {
                     continue;
                 }
-                Axis yAxis = chart.getYAxis(series.getYAxisGroup());
+                Axis<?, ?> yAxis = chart.getYAxis(series.getYAxisGroup());
                 double yMin = yAxis.getMin();
                 double yMax = yAxis.getMax();
                 if (ohlcStyler.isYAxisLogarithmic()) {
@@ -243,7 +239,6 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
                 List<? extends Number> closeData = series.getCloseData();
                 double candleHalfWidth =
                         Math.max(3, xTickSpace / xData.size() / 2 - ohlcStyler.getAxisTickPadding());
-                float lineWidth = Math.max(2, series.getLineStyle().getLineWidth());
                 for (int i = 0; i < xData.size(); i++) {
                     Double x = (Double) xData.get(i);
                     if (ohlcStyler.isXAxisLogarithmic()) {

@@ -1,6 +1,6 @@
 package org.xbib.graphics.chart.xy;
 
-import org.xbib.graphics.chart.internal.chart.ChartBuilder;
+import org.xbib.graphics.chart.ChartBuilder;
 
 public class XYChartBuilder extends ChartBuilder<XYChartBuilder, XYChart> {
 

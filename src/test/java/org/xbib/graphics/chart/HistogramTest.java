@@ -1,11 +1,10 @@
 package org.xbib.graphics.chart;
 
-import org.junit.Test;
-
 import java.util.Arrays;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+import org.junit.jupiter.api.Test;
 
 public class HistogramTest {
 

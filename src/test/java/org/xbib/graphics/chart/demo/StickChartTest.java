@@ -1,10 +1,10 @@
 package org.xbib.graphics.chart.demo;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.xbib.graphics.chart.io.VectorGraphicsFormat;
 import org.xbib.graphics.chart.category.CategoryChart;
 import org.xbib.graphics.chart.category.CategoryChartBuilder;
 import org.xbib.graphics.chart.category.CategorySeriesRenderStyle;
-import org.xbib.graphics.chart.io.VectorGraphicsEncoder;
 import org.xbib.graphics.chart.legend.LegendPosition;
 
 import java.io.IOException;
@@ -28,7 +28,7 @@ public class StickChartTest {
             yData.add(i);
         }
         chart.addSeries("data", xData, yData);
-        VectorGraphicsEncoder.write(chart, Files.newOutputStream(Paths.get("build/stickchart1.svg")),
-                VectorGraphicsEncoder.VectorGraphicsFormat.SVG);
+        chart.write(Files.newOutputStream(Paths.get("build/stickchart1.svg")),
+                VectorGraphicsFormat.SVG);
     }
 }

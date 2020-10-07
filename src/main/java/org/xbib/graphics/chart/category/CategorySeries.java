@@ -1,7 +1,7 @@
 package org.xbib.graphics.chart.category;
 
 import org.xbib.graphics.chart.axis.DataType;
-import org.xbib.graphics.chart.internal.series.AxesChartSeriesCategory;
+import org.xbib.graphics.chart.series.AxesChartSeriesCategory;
 import org.xbib.graphics.chart.legend.LegendRenderType;
 
 import java.util.List;

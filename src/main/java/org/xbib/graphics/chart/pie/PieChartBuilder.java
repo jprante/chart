@@ -1,6 +1,6 @@
 package org.xbib.graphics.chart.pie;
 
-import org.xbib.graphics.chart.internal.chart.ChartBuilder;
+import org.xbib.graphics.chart.ChartBuilder;
 
 public class PieChartBuilder extends ChartBuilder<PieChartBuilder, PieChart> {
 

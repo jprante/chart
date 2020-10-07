@@ -5,9 +5,9 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
-import java.io.IOException;
 
-public class StrokeTest extends TestCase {
+public class StrokeTest extends AbstractTest {
+
     private static final Stroke[] strokes = {
             // Width
             new BasicStroke(0.0f),
@@ -40,9 +40,6 @@ public class StrokeTest extends TestCase {
             new BasicStroke(1f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10f, new float[]{3f, 1f}, 1.5f),
             new BasicStroke(1f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10f, new float[]{3f, 1f}, 2.5f),
     };
-
-    public StrokeTest() throws IOException {
-    }
 
     @Override
     public void draw(Graphics2D g) {

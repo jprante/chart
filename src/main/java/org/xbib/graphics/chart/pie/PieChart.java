@@ -1,13 +1,13 @@
 package org.xbib.graphics.chart.pie;
 
-import org.xbib.graphics.chart.internal.chart.Chart;
-import org.xbib.graphics.chart.internal.plot.CircularPlot;
-import org.xbib.graphics.chart.internal.plot.ContentPlot;
-import org.xbib.graphics.chart.internal.plot.SurfacePlot;
-import org.xbib.graphics.chart.internal.series.Series;
-import org.xbib.graphics.chart.internal.style.SeriesColorMarkerLineStyle;
-import org.xbib.graphics.chart.internal.style.SeriesColorMarkerLineStyleCycler;
-import org.xbib.graphics.chart.Theme;
+import org.xbib.graphics.chart.Chart;
+import org.xbib.graphics.chart.plot.CircularPlot;
+import org.xbib.graphics.chart.plot.ContentPlot;
+import org.xbib.graphics.chart.plot.SurfacePlot;
+import org.xbib.graphics.chart.series.Series;
+import org.xbib.graphics.chart.style.SeriesColorMarkerLineStyle;
+import org.xbib.graphics.chart.style.SeriesColorMarkerLineStyleCycler;
+import org.xbib.graphics.chart.theme.Theme;
 
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -43,7 +43,7 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
 
     public PieSeries addSeries(String seriesName, Number value) {
         PieSeries series = new PieSeries(seriesName, value);
-        if (seriesMap.keySet().contains(seriesName)) {
+        if (seriesMap.containsKey(seriesName)) {
             throw new IllegalArgumentException("Series name >" + seriesName + "< has already been used. Use unique names for each series");
         }
         seriesMap.put(seriesName, series);
@@ -55,7 +55,7 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
         setWidth(width);
         setHeight(height);
         for (PieSeries pieSeries : getSeriesMap().values()) {
-            PieSeries.PieSeriesRenderStyle seriesType = pieSeries.getPieSeriesRenderStyle();
+            PieSeriesRenderStyle seriesType = pieSeries.getPieSeriesRenderStyle();
             if (seriesType == null) {
                 pieSeries.setPieSeriesRenderStyle(getStyler().getDefaultSeriesRenderStyle());
             }
@@ -84,7 +84,11 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
         }
     }
 
-    private class PiePlot<ST extends PieStyler, S extends PieSeries> extends CircularPlot<ST, S> {
+    private static class PiePlot<ST extends PieStyler, S extends PieSeries> extends CircularPlot<ST, S> {
+
+        private ContentPlot<ST, S> contentPlot;
+
+        private SurfacePlot<ST, S> surfacePlot;
 
         private PiePlot(Chart<ST, S> chart) {
             super(chart);
@@ -94,12 +98,23 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
             this.contentPlot = new ContentPlotPie<>(chart);
             this.surfacePlot = new SurfacePlotPie<>(chart);
         }
+
+        @Override
+        public void paint(Graphics2D g) {
+            super.paint(g);
+            surfacePlot.paint(g);
+            if (chart.getSeriesMap().isEmpty()) {
+                return;
+            }
+            contentPlot.paint(g);
+        }
     }
 
-    class ContentPlotPie<ST extends PieStyler, S extends PieSeries> extends ContentPlot<ST, S> {
+    private static class ContentPlotPie<ST extends PieStyler, S extends PieSeries> extends ContentPlot<ST, S> {
 
-        private PieStyler pieStyler;
-        private DecimalFormat df = new DecimalFormat("#.0");
+        private final PieStyler pieStyler;
+
+        private final DecimalFormat df = new DecimalFormat("#.0");
 
         private ContentPlotPie(Chart<ST, S> chart) {
             super(chart);
@@ -133,7 +148,6 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
                 }
                 total += series.getValue().doubleValue();
             }
-            // draw total value if visible
             if (pieStyler.isSumVisible()) {
                 DecimalFormat totalDf =
                         (pieStyler.getDecimalPattern() == null)
@@ -158,27 +172,23 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
                 // set text
                 AffineTransform orig = g.getTransform();
                 AffineTransform at = new AffineTransform();
-
                 at.translate(xCenter, yCenter);
                 g.transform(at);
                 g.fill(shape);
                 g.setTransform(orig);
             }
-
             double startAngle = pieStyler.getStartAngleInDegrees() + 90;
-
             map = chart.getSeriesMap();
             for (S series : map.values()) {
                 if (!series.isEnabled()) {
                     continue;
                 }
                 Number y = series.getValue();
-                Shape labelShape;
                 // draw slice/donut
                 double arcAngle = (y.doubleValue() * 360 / total);
                 g.setColor(series.getFillColor());
                 // slice
-                if (PieSeries.PieSeriesRenderStyle.Pie == series.getPieSeriesRenderStyle()) {
+                if (PieSeriesRenderStyle.Pie == series.getPieSeriesRenderStyle()) {
                     Arc2D.Double pieShape = new Arc2D.Double(
                             pieBounds.getX(),
                             pieBounds.getY(),
@@ -190,19 +200,15 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
                     g.fill(pieShape);
                     g.setColor(pieStyler.getPlotBackgroundColor());
                     g.draw(pieShape);
-                    labelShape = pieShape;
                 }
-                // donut
                 else {
                     Shape donutSlice =
                             getDonutSliceShape(pieBounds, pieStyler.getDonutThickness(), startAngle, arcAngle);
                     g.fill(donutSlice);
                     g.setColor(pieStyler.getPlotBackgroundColor());
                     g.draw(donutSlice);
-                    labelShape = donutSlice;
                 }
                 if (pieStyler.hasAnnotations()) {
-                    // draw annotation
                     String annotation = "";
                     if (pieStyler.getAnnotationType() == PieStyler.AnnotationType.Value) {
                         if (pieStyler.getDecimalPattern() != null) {
@@ -291,15 +297,6 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
                         g.setTransform(orig);
                     }
                 }
-                double xCenter =
-                        pieBounds.getX() + pieBounds.getWidth() / 2;
-                double yCenter =
-                        pieBounds.getY() + pieBounds.getHeight() / 2;
-                double angle = (arcAngle + startAngle) - arcAngle / 2;
-                double xOffset = xCenter + Math.cos(Math.toRadians(angle))
-                        * (pieBounds.getWidth() / 2 * pieStyler.getAnnotationDistance());
-                double yOffset = yCenter - Math.sin(Math.toRadians(angle))
-                        * (pieBounds.getHeight() / 2 * pieStyler.getAnnotationDistance());
                 startAngle += arcAngle;
             }
         }
@@ -331,7 +328,7 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
         }
     }
 
-    class SurfacePlotPie<ST extends PieStyler, S extends PieSeries> extends SurfacePlot<ST, S> {
+    private static class SurfacePlotPie<ST extends PieStyler, S extends PieSeries> extends SurfacePlot<ST, S> {
 
         private final ST pieStyler;
 
@@ -343,12 +340,14 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
         @Override
         public void paint(Graphics2D g) {
             Rectangle2D bounds = getBounds();
-            Shape rect = new Rectangle2D.Double(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
-            g.setColor(pieStyler.getPlotBackgroundColor());
-            g.fill(rect);
-            if (pieStyler.isPlotBorderVisible()) {
-                g.setColor(pieStyler.getPlotBorderColor());
-                g.draw(rect);
+            if (bounds != null) {
+                Shape rect = new Rectangle2D.Double(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
+                g.setColor(pieStyler.getPlotBackgroundColor());
+                g.fill(rect);
+                if (pieStyler.isPlotBorderVisible()) {
+                    g.setColor(pieStyler.getPlotBorderColor());
+                    g.draw(rect);
+                }
             }
         }
     }

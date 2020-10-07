@@ -1,6 +1,6 @@
 package org.xbib.graphics.chart.io.vector.intermediate.filters;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.xbib.graphics.chart.io.vector.intermediate.commands.Command;
 import org.xbib.graphics.chart.io.vector.intermediate.commands.CreateCommand;
 import org.xbib.graphics.chart.io.vector.intermediate.commands.DisposeCommand;
@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class AbsoluteToRelativeTransformsFilterTest {
 

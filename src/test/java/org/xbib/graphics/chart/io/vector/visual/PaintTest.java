@@ -5,11 +5,8 @@ import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
-import java.io.IOException;
 
-public class PaintTest extends TestCase {
-    public PaintTest() throws IOException {
-    }
+public class PaintTest extends AbstractTest {
 
     @Override
     public void draw(Graphics2D g) {

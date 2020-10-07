@@ -1,8 +1,7 @@
 package org.xbib.graphics.chart.pie;
 
-import org.xbib.graphics.chart.internal.style.Styler;
-import org.xbib.graphics.chart.Theme;
-import org.xbib.graphics.chart.pie.PieSeries.PieSeriesRenderStyle;
+import org.xbib.graphics.chart.style.Styler;
+import org.xbib.graphics.chart.theme.Theme;
 
 import java.awt.Font;
 
@@ -47,7 +46,7 @@ public class PieStyler extends Styler {
      * render
      * style individually on each Series object.
      *
-     * @param pieSeriesRenderStyle
+     * @param pieSeriesRenderStyle render style
      */
     public void setDefaultSeriesRenderStyle(PieSeriesRenderStyle pieSeriesRenderStyle) {
         this.pieSeriesRenderStyle = pieSeriesRenderStyle;
@@ -62,7 +61,7 @@ public class PieStyler extends Styler {
      * containing
      * plot.
      *
-     * @param isCircular
+     * @param isCircular circular
      */
     public void setCircular(boolean isCircular) {
         this.isCircular = isCircular;
@@ -75,7 +74,7 @@ public class PieStyler extends Styler {
     /**
      * Sets the start angle in degrees. Zero degrees is straight up.
      *
-     * @param startAngleInDegrees
+     * @param startAngleInDegrees start angle in degrees
      */
     public void setStartAngleInDegrees(double startAngleInDegrees) {
         this.startAngleInDegrees = startAngleInDegrees;
@@ -84,7 +83,7 @@ public class PieStyler extends Styler {
     /**
      * Sets the font used on the Pie Chart's annotations
      *
-     * @param pieFont
+     * @param pieFont pie font
      */
     public void setAnnotationFont(Font pieFont) {
         this.annotationFont = pieFont;
@@ -98,7 +97,7 @@ public class PieStyler extends Styler {
      * Sets the distance of the pie chart's annotation where 0 is the center, 1 is at the edge and greater than 1 is
      * outside of the pie chart.
      *
-     * @param annotationDistance
+     * @param annotationDistance annotation distance
      */
     public void setAnnotationDistance(double annotationDistance) {
         this.annotationDistance = annotationDistance;
@@ -111,7 +110,7 @@ public class PieStyler extends Styler {
     /**
      * Sets the Pie chart's annotation type
      *
-     * @param annotationType
+     * @param annotationType annotation type
      */
     public void setAnnotationType(AnnotationType annotationType) {
         this.annotationType = annotationType;
@@ -145,7 +144,7 @@ public class PieStyler extends Styler {
     /**
      * Sets whether or not the sum is visible in the centre of the pie chart.
      *
-     * @param isSumVisible
+     * @param isSumVisible sum visible
      */
     public void setSumVisible(boolean isSumVisible) {
         this.isSumVisible = isSumVisible;
@@ -158,7 +157,7 @@ public class PieStyler extends Styler {
     /**
      * Sets the font size for the sum.
      *
-     * @param sumFontSize
+     * @param sumFontSize font size
      */
     public void setSumFontSize(float sumFontSize) {
         this.sumFont = this.sumFont.deriveFont(sumFontSize);
@@ -180,7 +179,7 @@ public class PieStyler extends Styler {
     /**
      * Set the theme the styler should use
      *
-     * @param theme
+     * @param theme theme
      */
     public void setTheme(Theme theme) {
         this.theme = theme;

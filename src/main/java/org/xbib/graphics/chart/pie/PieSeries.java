@@ -1,6 +1,6 @@
 package org.xbib.graphics.chart.pie;
 
-import org.xbib.graphics.chart.internal.series.Series;
+import org.xbib.graphics.chart.series.Series;
 import org.xbib.graphics.chart.legend.LegendRenderType;
 
 /**
@@ -38,7 +38,4 @@ public class PieSeries extends Series {
         this.value = value;
     }
 
-    public enum PieSeriesRenderStyle {
-        Pie, Donut;
-    }
 }

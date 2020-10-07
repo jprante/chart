@@ -1,6 +1,6 @@
 package org.xbib.graphics.chart.io.vector.svg;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.xbib.graphics.chart.io.vector.Document;
 import org.xbib.graphics.chart.io.vector.intermediate.commands.Command;
 import org.xbib.graphics.chart.io.vector.intermediate.commands.DrawShapeCommand;
@@ -10,6 +10,7 @@ import org.xbib.graphics.chart.io.vector.util.PageSize;
 import java.awt.geom.Rectangle2D;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -33,7 +34,7 @@ public class SVGProcessorTest {
         Collections.addAll(this.commands, commands);
         Document processed = processor.process(this.commands, PAGE_SIZE);
         processed.write(bytes);
-        return bytes.toString("UTF-8");
+        return bytes.toString(StandardCharsets.UTF_8);
     }
 
     @Test

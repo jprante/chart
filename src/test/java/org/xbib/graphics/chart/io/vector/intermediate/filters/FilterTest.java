@@ -1,6 +1,9 @@
 package org.xbib.graphics.chart.io.vector.intermediate.filters;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
 import org.xbib.graphics.chart.io.vector.intermediate.commands.Command;
 import org.xbib.graphics.chart.io.vector.intermediate.commands.DrawShapeCommand;
 import org.xbib.graphics.chart.io.vector.intermediate.commands.SetColorCommand;
@@ -16,11 +19,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 public class FilterTest {
+
     @Test
     public void filterNone() {
         List<Command<?>> stream = new LinkedList<Command<?>>();
@@ -63,7 +64,6 @@ public class FilterTest {
                 return null;
             }
         };
-
         assertTrue(unfiltered.hasNext());
         assertFalse(filtered.hasNext());
     }

@@ -1,9 +1,9 @@
 package org.xbib.graphics.chart.demo;
 
-import org.junit.Test;
-import org.xbib.graphics.chart.Theme;
+import org.junit.jupiter.api.Test;
+import org.xbib.graphics.chart.theme.Theme;
+import org.xbib.graphics.chart.io.VectorGraphicsFormat;
 import org.xbib.graphics.chart.axis.YAxisPosition;
-import org.xbib.graphics.chart.io.VectorGraphicsEncoder;
 import org.xbib.graphics.chart.legend.LegendPosition;
 import org.xbib.graphics.chart.xy.XYChart;
 import org.xbib.graphics.chart.xy.XYChartBuilder;
@@ -19,6 +19,30 @@ import java.util.List;
 import java.util.Random;
 
 public class ScatterChartTest {
+
+    @Test
+    public void testScatterChart0() throws IOException {
+        XYChart chart = new XYChartBuilder().width(600).height(500).title("Gaussian Blobs").xAxisTitle("X").yAxisTitle("Y").build();
+        chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Scatter);
+        chart.getStyler().setChartTitleVisible(false);
+        chart.getStyler().setLegendPosition(LegendPosition.InsideSW);
+        chart.getStyler().setMarkerSize(16);
+        chart.addSeries("Gaussian Blob 1", getGaussian(1000, 1, 10), getGaussian(1000, 1, 10));
+        XYSeries series = chart.addSeries("Gaussian Blob 2", getGaussian(1000, 1, 10), getGaussian(1000, 0, 5));
+        series.setMarker(Theme.Series.DIAMOND_MARKER);
+        chart.write(Files.newOutputStream(Paths.get("build/scatterchart0.svg")),
+                VectorGraphicsFormat.SVG);
+    }
+
+    private static final Random random = new Random();
+
+    private static  List<Double> getGaussian(int number, double mean, double std) {
+        List<Double> seriesData = new LinkedList<>();
+        for (int i = 0; i < number; i++) {
+            seriesData.add(mean + std * random.nextGaussian());
+        }
+        return seriesData;
+    }
 
     @Test
     public void testScatterChart1() throws IOException {
@@ -39,8 +63,8 @@ public class ScatterChartTest {
         XYSeries series = chart.addSeries("Gaussian Blob", xData, yData);
         series.setMarker(Theme.Series.CROSS_MARKER);
 
-        VectorGraphicsEncoder.write(chart, Files.newOutputStream(Paths.get("build/scatterchart1.svg")),
-                VectorGraphicsEncoder.VectorGraphicsFormat.SVG);
+        chart.write(Files.newOutputStream(Paths.get("build/scatterchart1.svg")),
+                VectorGraphicsFormat.SVG);
     }
 
     @Test
@@ -60,8 +84,8 @@ public class ScatterChartTest {
         }
         chart.addSeries("logarithmic data", xData, yData);
 
-        VectorGraphicsEncoder.write(chart, Files.newOutputStream(Paths.get("build/scatterchart2.svg")),
-                VectorGraphicsEncoder.VectorGraphicsFormat.SVG);
+        chart.write(Files.newOutputStream(Paths.get("build/scatterchart2.svg")),
+                VectorGraphicsFormat.SVG);
     }
 
     @Test
@@ -77,7 +101,7 @@ public class ScatterChartTest {
         chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Scatter);
         chart.addSeries("single point (1,1)", new double[] {1}, new double[] {1});
 
-        VectorGraphicsEncoder.write(chart, Files.newOutputStream(Paths.get("build/scatterchart3.svg")),
-                VectorGraphicsEncoder.VectorGraphicsFormat.SVG);
+        chart.write(Files.newOutputStream(Paths.get("build/scatterchart3.svg")),
+                VectorGraphicsFormat.SVG);
     }
 }

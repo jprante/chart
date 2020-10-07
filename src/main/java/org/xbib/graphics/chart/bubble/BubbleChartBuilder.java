@@ -1,6 +1,6 @@
 package org.xbib.graphics.chart.bubble;
 
-import org.xbib.graphics.chart.internal.chart.ChartBuilder;
+import org.xbib.graphics.chart.ChartBuilder;
 
 public class BubbleChartBuilder extends ChartBuilder<BubbleChartBuilder, BubbleChart> {
 

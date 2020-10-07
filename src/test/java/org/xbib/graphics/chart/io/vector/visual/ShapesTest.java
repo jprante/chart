@@ -11,11 +11,8 @@ import java.awt.geom.Path2D;
 import java.awt.geom.QuadCurve2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
-import java.io.IOException;
 
-public class ShapesTest extends TestCase {
-    public ShapesTest() throws IOException {
-    }
+public class ShapesTest extends AbstractTest {
 
     @Override
     public void draw(Graphics2D g) {

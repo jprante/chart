@@ -1,30 +1,25 @@
 package org.xbib.graphics.chart.io.vector.util;
 
-import org.junit.Test;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-
-import static org.junit.Assert.assertEquals;
+import java.nio.charset.StandardCharsets;
 
 public class ASCII85EncodeStreamTest {
 
     private static void assertEncodedString(String expected, String input) throws IOException {
         ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes());
-
         ByteArrayOutputStream outStream = new ByteArrayOutputStream();
         OutputStream encodeStream = new ASCII85EncodeStream(outStream);
-
         byte[] buffer = new byte[1024];
         for (int count = inputStream.read(buffer); count >= 0; count = inputStream.read(buffer)) {
             encodeStream.write(buffer, 0, count);
         }
         encodeStream.close();
-
-        String encoded = outStream.toString("ISO-8859-1");
-
+        String encoded = outStream.toString(StandardCharsets.ISO_8859_1);
         assertEquals(expected, encoded);
     }
 
@@ -55,6 +50,4 @@ public class ASCII85EncodeStreamTest {
     public void testEmpty() throws IOException {
         assertEncodedString("~>", "");
     }
-
 }
-

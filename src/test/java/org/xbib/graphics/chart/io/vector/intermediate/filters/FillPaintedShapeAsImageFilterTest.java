@@ -1,6 +1,6 @@
 package org.xbib.graphics.chart.io.vector.intermediate.filters;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.xbib.graphics.chart.io.vector.intermediate.commands.Command;
 import org.xbib.graphics.chart.io.vector.intermediate.commands.DrawImageCommand;
 import org.xbib.graphics.chart.io.vector.intermediate.commands.FillShapeCommand;
@@ -17,12 +17,12 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.any;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.not;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
-
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class FillPaintedShapeAsImageFilterTest {
+
     @Test
     public void testFillShapeReplacedWithDrawImage() {
         List<Command<?>> commands = new LinkedList<Command<?>>();

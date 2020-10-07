@@ -1,7 +1,7 @@
 package org.xbib.graphics.chart.ohlc;
 
 import org.xbib.graphics.chart.axis.DataType;
-import org.xbib.graphics.chart.internal.series.AxesChartSeries;
+import org.xbib.graphics.chart.series.AxesChartSeries;
 import org.xbib.graphics.chart.legend.LegendRenderType;
 
 import java.awt.Color;
@@ -11,11 +11,11 @@ import java.util.List;
 
 public class OHLCSeries extends AxesChartSeries {
 
-    private List<?> xData;
-    private List<? extends Number> openData;
-    private List<? extends Number> highData;
-    private List<? extends Number> lowData;
-    private List<? extends Number> closeData;
+    private final List<?> xData;
+    private final List<? extends Number> openData;
+    private final List<? extends Number> highData;
+    private final List<? extends Number> lowData;
+    private final List<? extends Number> closeData;
     private OHLCSeriesRenderStyle ohlcSeriesRenderStyle;
     private Color upColor;
     private Color downColor;
@@ -65,30 +65,15 @@ public class OHLCSeries extends AxesChartSeries {
         return ohlcSeriesRenderStyle.getLegendRenderType();
     }
 
-    void replaceData(List<?> newXData,
-                     List<? extends Number> newOpenData,
-                     List<? extends Number> newHighData,
-                     List<? extends Number> newLowData,
-                     List<? extends Number> newCloseData) {
-
-        // Sanity check should already by done
-        this.xData = newXData;
-        this.openData = newOpenData;
-        this.highData = newHighData;
-        this.lowData = newLowData;
-        this.closeData = newCloseData;
-        calculateMinMax();
-    }
-
     private List<Double> findMinMax(List<?> lows, List<?> highs) {
-        Double min = Double.MAX_VALUE;
-        Double max = -Double.MAX_VALUE;
+        double min = Double.MAX_VALUE;
+        double max = -Double.MAX_VALUE;
         for (int i = 0; i < highs.size(); i++) {
             Object h = highs.get(i);
             Object l = lows.get(i);
             if (h instanceof Double) {
-                Double d = (Double) h;
-                if (d != Double.NaN && d > max) {
+                double d = (Double) h;
+                if (!Double.isNaN(d) && d > max) {
                     max = d;
                 }
             } else if (h instanceof Instant) {
@@ -98,8 +83,8 @@ public class OHLCSeries extends AxesChartSeries {
                 }
             }
             if (l instanceof Double) {
-                Double d = (Double) l;
-                if (d != Double.NaN && d < min) {
+                double d = (Double) l;
+                if (!Double.isNaN(d) && d < min) {
                     min = d;
                 }
             } else if (l instanceof Instant) {

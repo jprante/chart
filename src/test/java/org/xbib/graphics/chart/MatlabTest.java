@@ -1,7 +1,8 @@
 package org.xbib.graphics.chart;
 
-import org.junit.Test;
-import org.xbib.graphics.chart.io.VectorGraphicsEncoder;
+import org.junit.jupiter.api.Test;
+import org.xbib.graphics.chart.io.VectorGraphicsFormat;
+import org.xbib.graphics.chart.theme.MatlabTheme;
 import org.xbib.graphics.chart.xy.XYChart;
 import org.xbib.graphics.chart.xy.XYChartBuilder;
 
@@ -17,7 +18,7 @@ public class MatlabTest {
     @Test
     public void testMatlabInstants() throws IOException {
         XYChart chart = new XYChartBuilder().width(800).height(600)
-                .theme(Theme.MATLAB)
+                .theme(new MatlabTheme())
                 .title("Matlab Theme")
                 .xAxisTitle("X")
                 .yAxisTitle("Y")
@@ -60,7 +61,7 @@ public class MatlabTest {
         chart.addSeries("downloads", xData, y1Data);
         chart.addSeries("price", xData, y2Data);
 
-        VectorGraphicsEncoder.write(chart, Files.newOutputStream(Paths.get("build/matlab.svg")),
-                VectorGraphicsEncoder.VectorGraphicsFormat.SVG );
+        chart.write(Files.newOutputStream(Paths.get("build/matlab.svg")),
+                VectorGraphicsFormat.SVG );
     }
 }

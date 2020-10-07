@@ -1,11 +1,10 @@
 package org.xbib.graphics.chart.io.vector.util;
 
-import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 
 public class DataUtilsTest {
+
     @Test
     public void stripTrailingSpaces() {
         String result = DataUtils.stripTrailing(" foo bar!   ", " ");
@@ -26,6 +25,4 @@ public class DataUtilsTest {
         String expected = "+bar foo";
         assertEquals(expected, result);
     }
-
 }
-

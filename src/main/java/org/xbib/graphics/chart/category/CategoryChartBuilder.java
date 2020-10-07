@@ -1,6 +1,6 @@
 package org.xbib.graphics.chart.category;
 
-import org.xbib.graphics.chart.internal.chart.ChartBuilder;
+import org.xbib.graphics.chart.ChartBuilder;
 
 public class CategoryChartBuilder extends ChartBuilder<CategoryChartBuilder, CategoryChart> {
 

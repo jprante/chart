@@ -1,7 +1,7 @@
 package org.xbib.graphics.chart.ohlc;
 
-import org.xbib.graphics.chart.internal.style.AxesChartStyler;
-import org.xbib.graphics.chart.Theme;
+import org.xbib.graphics.chart.style.AxesChartStyler;
+import org.xbib.graphics.chart.theme.Theme;
 
 public class OHLCStyler extends AxesChartStyler {
 
@@ -18,7 +18,6 @@ public class OHLCStyler extends AxesChartStyler {
     }
 
     public OHLCSeriesRenderStyle getDefaultSeriesRenderStyle() {
-
         return ohlcSeriesRenderStyle;
     }
 

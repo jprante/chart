@@ -10,7 +10,7 @@ public class PDFObject {
     public final Payload payload;
 
     public PDFObject(int id, int version, Map<String, Object> dict, Payload payload) {
-        this.dict = new LinkedHashMap<String, Object>();
+        this.dict = new LinkedHashMap<>();
         this.id = id;
         this.version = version;
         this.payload = payload;

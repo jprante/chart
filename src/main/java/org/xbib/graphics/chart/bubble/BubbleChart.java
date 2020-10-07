@@ -1,12 +1,12 @@
 package org.xbib.graphics.chart.bubble;
 
-import org.xbib.graphics.chart.internal.axis.AxisPair;
-import org.xbib.graphics.chart.internal.chart.Chart;
-import org.xbib.graphics.chart.internal.plot.AxesChartPlot;
-import org.xbib.graphics.chart.internal.plot.ContentPlot;
-import org.xbib.graphics.chart.internal.style.SeriesColorMarkerLineStyle;
-import org.xbib.graphics.chart.internal.style.SeriesColorMarkerLineStyleCycler;
-import org.xbib.graphics.chart.Theme;
+import org.xbib.graphics.chart.axis.AxisPair;
+import org.xbib.graphics.chart.Chart;
+import org.xbib.graphics.chart.plot.AxesChartPlot;
+import org.xbib.graphics.chart.plot.ContentPlot;
+import org.xbib.graphics.chart.style.SeriesColorMarkerLineStyle;
+import org.xbib.graphics.chart.style.SeriesColorMarkerLineStyleCycler;
+import org.xbib.graphics.chart.theme.Theme;
 
 import java.awt.Graphics2D;
 import java.awt.Shape;
@@ -56,7 +56,7 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
     private void sanityCheck(String seriesName, List<?> xData,
                              List<? extends Number> yData,
                              List<? extends Number> bubbleData) {
-        if (seriesMap.keySet().contains(seriesName)) {
+        if (seriesMap.containsKey(seriesName)) {
             throw new IllegalArgumentException("Series name >"
                             + seriesName
                             + "< has already been used. Use unique names for each series");
@@ -121,15 +121,15 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
         }
     }
 
-    private class BubblePlot<ST extends BubbleStyler, S extends BubbleSeries> extends AxesChartPlot<ST, S> {
+    private static class BubblePlot<ST extends BubbleStyler, S extends BubbleSeries> extends AxesChartPlot<ST, S> {
 
         private BubblePlot(Chart<ST, S> chart) {
             super(chart);
-            this.contentPlot = new BubbleContentPlot<ST, S>(chart);
+            this.contentPlot = new BubbleContentPlot<>(chart);
         }
     }
 
-    class BubbleContentPlot<ST extends BubbleStyler, S extends BubbleSeries> extends ContentPlot<ST, S> {
+    private static class BubbleContentPlot<ST extends BubbleStyler, S extends BubbleSeries> extends ContentPlot<ST, S> {
 
         private final ST stylerBubble;
 

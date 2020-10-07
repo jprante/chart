@@ -1,16 +1,16 @@
 package org.xbib.graphics.chart.xy;
 
 import org.xbib.graphics.chart.axis.DataType;
-import org.xbib.graphics.chart.internal.axis.Axis;
-import org.xbib.graphics.chart.internal.axis.AxisPair;
-import org.xbib.graphics.chart.internal.chart.Chart;
-import org.xbib.graphics.chart.internal.legend.MarkerLegend;
-import org.xbib.graphics.chart.internal.plot.AxesChartPlot;
-import org.xbib.graphics.chart.internal.plot.ContentPlot;
-import org.xbib.graphics.chart.internal.style.AxesChartStyler;
-import org.xbib.graphics.chart.internal.style.SeriesColorMarkerLineStyle;
-import org.xbib.graphics.chart.internal.style.SeriesColorMarkerLineStyleCycler;
-import org.xbib.graphics.chart.Theme;
+import org.xbib.graphics.chart.axis.Axis;
+import org.xbib.graphics.chart.axis.AxisPair;
+import org.xbib.graphics.chart.Chart;
+import org.xbib.graphics.chart.legend.MarkerLegend;
+import org.xbib.graphics.chart.plot.AxesChartPlot;
+import org.xbib.graphics.chart.plot.ContentPlot;
+import org.xbib.graphics.chart.style.AxesChartStyler;
+import org.xbib.graphics.chart.style.SeriesColorMarkerLineStyle;
+import org.xbib.graphics.chart.style.SeriesColorMarkerLineStyleCycler;
+import org.xbib.graphics.chart.theme.Theme;
 
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -157,7 +157,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
         return axisType;
     }
 
-    private class XYPlot<ST extends AxesChartStyler, S extends XYSeries> extends AxesChartPlot<ST, S> {
+    private static class XYPlot<ST extends AxesChartStyler, S extends XYSeries> extends AxesChartPlot<ST, S> {
 
         private XYPlot(Chart<ST, S> chart) {
             super(chart);
@@ -165,7 +165,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
         }
     }
 
-    class ContentPlotXY<ST extends AxesChartStyler, S extends XYSeries> extends ContentPlot<ST, S> {
+    private static class ContentPlotXY<ST extends AxesChartStyler, S extends XYSeries> extends ContentPlot<ST, S> {
 
         private final ST xystyler;
 
@@ -192,7 +192,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
                 if (!series.isEnabled()) {
                     continue;
                 }
-                Axis yAxis = chart.getYAxis(series.getYAxisGroup());
+                Axis<?, ?> yAxis = chart.getYAxis(series.getYAxisGroup());
                 double yMin = yAxis.getMin();
                 double yMax = yAxis.getMax();
                 if (xystyler.isYAxisLogarithmic()) {
@@ -212,19 +212,20 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
                 }
                 Path2D.Double path = null;
                 while (xItr.hasNext()) {
-                    double x = 0.0;
+                    Double x = null;
                     if (chart.getXAxis().getDataType() == DataType.Number) {
-                        x = ((Number) xItr.next()).doubleValue();
+                        Number number = (Number) xItr.next();
+                        x = number != null ? number.doubleValue() : null;
                     } else if (chart.getXAxis().getDataType() == DataType.Instant) {
-                        x = ((Instant) xItr.next()).toEpochMilli();
+                        Instant instant = (Instant) xItr.next();
+                        x = instant != null ? (double) instant.toEpochMilli() : null;
                     }
                     if (xystyler.isXAxisLogarithmic()) {
-                        x = Math.log10(x);
+                        x = x != null ? Math.log10(x) : null;
                     }
                     Number next = yItr.next();
-                    if (next == null) {
-                        // for area charts
-                        closePath(g, path, previousX, getBounds(), yTopMargin);
+                    if (x == null || next == null) {
+                        closePath(g, path, previousX, yTopMargin);
                         path = null;
                         previousX = -Double.MAX_VALUE;
                         previousY = -Double.MAX_VALUE;
@@ -338,13 +339,13 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
                     }
                 }
                 g.setColor(series.getFillColor());
-                closePath(g, path, previousX, getBounds(), yTopMargin);
+                closePath(g, path, previousX, yTopMargin);
             }
         }
     }
 
     private void sanityCheck(String seriesName, List<?> xData, List<? extends Number> yData, List<? extends Number> errorBars) {
-        if (seriesMap.keySet().contains(seriesName)) {
+        if (seriesMap.containsKey(seriesName)) {
             throw new IllegalArgumentException("Series name >" + seriesName + "< has already been used. Use unique names for each series");
         }
         if (yData == null) {

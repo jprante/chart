@@ -1,31 +1,27 @@
 package org.xbib.graphics.chart.io.vector.visual;
 
 import java.awt.Graphics2D;
-import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CharacterTest extends TestCase {
-    public CharacterTest() throws IOException {
-    }
+public class CharacterTest extends AbstractTest {
 
     @Override
     public void draw(Graphics2D g) {
         double w = getPageSize().width;
         double h = getPageSize().height;
-
-        Charset latin1 = Charset.forName("ISO-8859-1");
+        Charset latin1 = StandardCharsets.ISO_8859_1;
         CharsetEncoder latin1Encoder = latin1.newEncoder();
-        List<String> charactersInCharset = new ArrayList<String>();
+        List<String> charactersInCharset = new ArrayList<>();
         for (char char_ = Character.MIN_VALUE; char_ < Character.MAX_VALUE; char_++) {
             String javaString = String.valueOf(char_);
             if (latin1Encoder.canEncode(char_)) {
                 charactersInCharset.add(javaString);
             }
         }
-
         final int colCount = (int) Math.ceil(Math.sqrt(charactersInCharset.size()));
         final int rowCount = colCount;
         double tileWidth = w / colCount;

@@ -1,7 +1,7 @@
 package org.xbib.graphics.chart.demo;
 
-import org.junit.Test;
-import org.xbib.graphics.chart.io.VectorGraphicsEncoder;
+import org.junit.jupiter.api.Test;
+import org.xbib.graphics.chart.io.VectorGraphicsFormat;
 import org.xbib.graphics.chart.pie.PieChart;
 import org.xbib.graphics.chart.pie.PieChartBuilder;
 
@@ -34,8 +34,8 @@ public class PieChartTest {
         chart.addSeries("Copper", 17);
         chart.addSeries("Zinc", 40);
 
-        VectorGraphicsEncoder.write(chart, Files.newOutputStream(Paths.get("build/piechart2.svg")),
-                VectorGraphicsEncoder.VectorGraphicsFormat.SVG);
+        chart.write(Files.newOutputStream(Paths.get("build/piechart2.svg")),
+                VectorGraphicsFormat.SVG);
 
     }
 }
